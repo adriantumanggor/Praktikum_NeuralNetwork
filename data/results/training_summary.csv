@@ -1,0 +1,3 @@
+gate_type,epochs_to_converge,final_w1,final_w2,final_w_bias,final_accuracy,total_weight_updates,converged
+AND,10,0.2159,0.1582,-0.29,1.0,17,True
+OR,7,0.3282,0.1049,-0.0179,1.0,10,True
