@@ -19,7 +19,7 @@ class Perceptron:
         """Forward pass - hitung output perceptron"""
         weighted_sum = (self.w1 * x1) + (self.w2 * x2) + (self.w_bias * self.bias)
         predicted_output = self.step_function(weighted_sum)
-        return weighted_sum, predicted_output
+        return weighted_sum, predicted_outputp
     
     def train_sample(self, x1, x2, expected_output):
         """
@@ -60,5 +60,4 @@ class Perceptron:
             predicted = self.predict(x1, x2)
             if predicted == expected:
                 correct += 1
-                
         return correct / total if total > 0 else 0.0

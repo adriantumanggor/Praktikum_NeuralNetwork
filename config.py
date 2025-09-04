@@ -30,3 +30,4 @@ SUMMARY_HEADERS = [
     "final_w2", "final_w_bias", "final_accuracy", 
     "total_weight_updates", "converged"
 ]
+
