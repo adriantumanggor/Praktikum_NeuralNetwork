@@ -5,7 +5,7 @@ Entry point untuk training single perceptron pada gerbang AND dan OR
 
 import csv
 import os
-from src.data_loader import get_and_gate_data, get_or_gate_data, create_training_data_files
+from src.data_loader import get_and_gate_data, get_or_gate_data
 from src.trainer import PerceptronTrainer
 from config import AND_LOG_FILE, OR_LOG_FILE, SUMMARY_FILE, SUMMARY_HEADERS, RESULTS_DIR
 
@@ -44,9 +44,6 @@ def main():
     """Main function"""
     print("Single Perceptron Neural Network - AND & OR Gates")
     print("=" * 55)
-    
-    # Create training data files
-    create_training_data_files()
     
     # Get training data
     and_data = get_and_gate_data()

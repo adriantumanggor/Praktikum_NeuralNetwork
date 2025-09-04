@@ -24,31 +24,6 @@ def get_or_gate_data():
         (1, 1, 1)
     ]
 
-def create_training_data_files():
-    """Buat file CSV untuk training data"""
-    from config import DATA_DIR, AND_TRAINING_DATA, OR_TRAINING_DATA
-    
-    # Buat direktori jika belum ada
-    os.makedirs(DATA_DIR, exist_ok=True)
-    
-    # AND gate data
-    and_data = get_and_gate_data()
-    with open(AND_TRAINING_DATA, 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(['x1', 'x2', 'expected_output'])
-        writer.writerows(and_data)
-    
-    # OR gate data  
-    or_data = get_or_gate_data()
-    with open(OR_TRAINING_DATA, 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(['x1', 'x2', 'expected_output'])
-        writer.writerows(or_data)
-    
-    print(f"Training data files created:")
-    print(f"- {AND_TRAINING_DATA}")
-    print(f"- {OR_TRAINING_DATA}")
-
 def load_training_data(filename):
     """Load training data dari CSV file"""
     data = []
