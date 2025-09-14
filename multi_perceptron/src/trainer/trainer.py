@@ -61,11 +61,7 @@ class MLPTrainer:
                 self.epochs_without_improvement = 0
             else:
                 self.epochs_without_improvement += 1
-            
-            # Save model periodically
-            if epoch % self.training_config['save_model_every'] == 0:
-                self._save_checkpoint(epoch)
-            
+                        
             # Early stopping
             if self._should_stop_early(avg_loss):
                 print(f"\nEarly stopping at epoch {epoch}")
@@ -133,13 +129,25 @@ class MLPTrainer:
         
         print(f"Model saved to: {model_file}")
     
-    def test(self, test_data: List[Tuple[List[float], List[float]]]):
+    def test(self, test_data: List[Tuple[Any, Any]]):
         """Test the trained network"""
-        print("Input\t| Expected | Predicted | Error")
-        print("-" * 40)
+        # Sedikit penyesuaian pada header untuk output yang lebih rapi
+        print("Input\t\t| Expected | Predicted | Error")
+        print("-" * 50)
         
         for inputs, expected in test_data:
-            prediction = self.mlp.predict(inputs)
-            error = abs(expected[0] - prediction[0])
+            # Mengambil prediksi dari model
+            prediction = self.mlp.predict(inputs.flatten().tolist())
             
-            print(f"{inputs}\t| {expected[0]:.4f}   | {prediction[0]:.4f}    | {error:.4f}")
+            # --- FIX: Ekstrak nilai skalar dari array NumPy menggunakan .item() ---
+            expected_value = expected.item()
+            prediction_value = prediction[0]
+            
+            # Hitung error menggunakan nilai skalar
+            error = abs(expected_value - prediction_value)
+            
+            # Mengubah input array menjadi string yang lebih rapi untuk dicetak
+            input_str = str(inputs.flatten().tolist())
+            
+            # Cetak menggunakan nilai skalar yang sudah diekstrak
+            print(f"{input_str:<15}\t| {expected_value:.4f}   | {prediction_value:.4f}    | {error:.4f}")

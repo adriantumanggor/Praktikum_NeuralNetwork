@@ -1,7 +1,4 @@
 ### config.py
-"""
-Configuration file for MLP training
-"""
 import os
 
 # Project paths
@@ -16,7 +13,7 @@ PLOTS_DIR = os.path.join(RESULTS_DIR, 'plots')
 # Network configuration
 NETWORK_CONFIG = {
     'input_size': 2,
-    'hidden_size': 4,
+    'hidden_size': 2,
     'output_size': 1,
     'learning_rate': 0.5,
     'weight_init_range': (-1.0, 1.0),
@@ -25,11 +22,10 @@ NETWORK_CONFIG = {
 
 # Training configuration
 TRAINING_CONFIG = {
-    'epochs': 1000,
-    'log_detailed_every': 100,      # Log detailed setiap N epochs
+    'epochs': 10000,
+    'log_detailed_every': 1000,      # Log detailed setiap N epochs
     'log_first_epochs': 5,          # Log detailed untuk N epochs pertama
     'print_progress_every': 50,     # Print progress setiap N epochs
-    'save_model_every': 200,        # Save model every N epochs
     'early_stopping_patience': 100, # Stop if no improvement for N epochs
     'target_loss': 0.01             # Target loss untuk early stopping
 }
@@ -45,8 +41,6 @@ LOGGING_CONFIG = {
 # Dataset configuration
 DATASET_CONFIG = {
     'xor_dataset_file': 'xor_dataset.json',
-    'shuffle_data': True,
-    'validation_split': 0.0  # No validation for XOR (too small dataset)
 }
 
 

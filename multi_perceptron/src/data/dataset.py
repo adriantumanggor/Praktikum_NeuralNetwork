@@ -1,57 +1,52 @@
-### src/data/dataset.py
-"""
-Dataset creation and handling
-"""
-import json
+import numpy as np
 import os
-from typing import List, Tuple
-import config
+import json
+import random
+import config # Menggunakan variabel dari file config.py
 
 class XORDataset:
-    """XOR dataset creation and management"""
-    
+    """
+    Class untuk MEMBACA dataset XOR dari file JSON,
+    sesuai dengan path dan pengaturan di config.py.
+    """
     def __init__(self):
-        self.data = self._create_xor_data()
-        self._save_dataset()
-    
-    def _create_xor_data(self) -> List[Tuple[List[float], List[float]]]:
-        """Create XOR training dataset"""
-        return [
-            ([0.0, 0.0], [0.0]),  # 0 XOR 0 = 0
-            ([0.0, 1.0], [1.0]),  # 0 XOR 1 = 1
-            ([1.0, 0.0], [1.0]),  # 1 XOR 0 = 1
-            ([1.0, 1.0], [0.0])   # 1 XOR 1 = 0
-        ]
-    
-    def _save_dataset(self):
-        """Save dataset to JSON file"""
-        dataset_file = os.path.join(config.INPUT_DIR, config.DATASET_CONFIG['xor_dataset_file'])
+        """
+        Inisialisasi dan langsung muat data dari file.
+        """
+        self.data = []
+        self._load_data()
         
-        # Convert to JSON serializable format
-        json_data = {
-            'description': 'XOR Logic Gate Dataset',
-            'input_size': 2,
-            'output_size': 1,
-            'samples': [
-                {'input': inputs, 'target': targets} 
-                for inputs, targets in self.data
-            ]
-        }
+    def _load_data(self):
+        """
+        Membaca file dataset JSON dan mengubahnya menjadi format
+        yang siap digunakan untuk training (numpy array).
+        """
+        # Mengambil nama file dan direktori dari config.py
+        filename = config.DATASET_CONFIG['xor_dataset_file']
+        file_path = os.path.join(config.INPUT_DIR, filename)
         
-        with open(dataset_file, 'w') as f:
-            json.dump(json_data, f, indent=2)
-    
-    def get_data(self) -> List[Tuple[List[float], List[float]]]:
-        """Get training data"""
-        return self.data.copy()
-    
-    @classmethod
-    def load_from_file(cls, filename: str) -> 'XORDataset':
-        """Load dataset from JSON file"""
-        with open(filename, 'r') as f:
-            json_data = json.load(f)
+        print(f"Membaca dataset dari: {file_path}")
         
-        dataset = cls.__new__(cls)
-        dataset.data = [(sample['input'], sample['target']) 
-                       for sample in json_data['samples']]
-        return dataset
+        try:
+            with open(file_path, 'r') as f:
+                dataset = json.load(f)
+        except FileNotFoundError:
+            print(f"Error: File dataset tidak ditemukan di '{file_path}'")
+            print("Pastikan direktori 'data/input/' sudah ada dan berisi file JSON.")
+            exit()
+
+        # Ubah data dari JSON menjadi list of tuples (input_array, target_array)
+        for sample in dataset['samples']:
+            inputs = np.array(sample['input']).reshape(-1, 1)
+            targets = np.array(sample['target']).reshape(-1, 1)
+            self.data.append((inputs, targets))
+
+    def get_data(self):
+        """
+        Mengembalikan data training.
+        Data akan diacak jika 'shuffle_data' di config adalah True.
+        """
+        # Buat salinan data agar tidak mengubah urutan asli di self.data
+        training_data = self.data.copy()
+                    
+        return training_data

@@ -1,0 +1,18 @@
+activation_output,bias_change,description,epoch,error,error_sum,final_error,from_neuron,gradient,input_0,input_1,loss_value,neuron_index,new_bias,new_weight,old_bias,old_weight,prediction,raw_error,sample_index,sigmoid_derivative,step_type,target,target_0,to_neuron,weight_change,weighted_sum
+,,Processing sample 2 in epoch 0,0,,,,,,[1.],[0.],,,,,,,,,2,,sample_info,,[1.],,,
+0.5312031296685715,,Hidden neuron 0 forward pass,,,,,,,,,,0,,,,,,,,,forward_hidden,,,,,[0.12497493]
+0.2825839951942111,,Hidden neuron 1 forward pass,,,,,,,,,,1,,,,,,,,,forward_hidden,,,,,[-0.93168004]
+0.3712590277396318,,Output neuron 0 forward pass,,[0.62874097],,,,,,,,0,,,,,,,,,forward_output,[1.],,,,[-0.52681936]
+,,MSE loss calculation,,,,,,,,,0.3953152101989131,,,,,,,,,,loss_calculation,,,,,
+,,Output neuron 0 error calculation,,,,[0.14676434],,,,,,0,,,,,0.3712590277396318,[0.62874097],,0.2334257620614551,backprop_output_error,[1.],,,,
+,,Hidden neuron 0 error calculation,,,[-0.13356744],[-0.03326181],,,,,,0,,,,,,,,0.2490263646988863,backprop_hidden_error,,,,,
+,,Hidden neuron 1 error calculation,,,[-0.04003514],[-0.00811634],,,,,,1,,,,,,,,0.2027302808542892,backprop_hidden_error,,,,,
+,,Weight update: input 0 -> hidden 0,,,,,0,[-0.01663091],,,,,,[0.11601972],,[0.13265063],,,,,weight_update_input_hidden,,,0,[-0.01663091],
+,,Weight update: input 0 -> hidden 1,,,,,0,[-0.00405817],,,,,,[-0.93389431],,[-0.92983615],,,,,weight_update_input_hidden,,,1,[-0.00405817],
+,,Weight update: input 1 -> hidden 0,,,,,1,[-0.],,,,,,[0.33476804],,[0.33476804],,,,,weight_update_input_hidden,,,0,[0.],
+,,Weight update: input 1 -> hidden 1,,,,,1,[-0.],,,,,,[-0.8397534],,[-0.8397534],,,,,weight_update_input_hidden,,,1,[0.],
+,,Weight update: hidden 0 -> output 0,,,,,0,[0.03898084],,,,,,[-0.87110019],,[-0.91008103],,,,,weight_update_hidden_output,,,0,[0.03898084],
+,,Weight update: hidden 1 -> output 0,,,,,1,[0.02073663],,,,,,[-0.2520486],,[-0.27278523],,,,,weight_update_hidden_output,,,0,[0.02073663],
+,[-0.01663091],Bias update: hidden neuron 0,,,,,,[-0.01663091],,,,0,[-0.02430661],,[-0.0076757],,,,,,bias_update_hidden,,,,,
+,[-0.00405817],Bias update: hidden neuron 1,,,,,,[-0.00405817],,,,1,[-0.00590206],,[-0.00184389],,,,,,bias_update_hidden,,,,,
+,[0.07338217],Bias update: output neuron 0,,,,,,[0.07338217],,,,0,[0.10708544],,[0.03370327],,,,,,bias_update_output,,,,,

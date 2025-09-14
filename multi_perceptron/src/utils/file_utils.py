@@ -7,22 +7,6 @@ import json
 from typing import List, Dict, Any
 import config
 
-def setup_directories():
-    """Create all necessary directories for the project"""
-    directories = [
-        config.DATA_DIR,
-        config.INPUT_DIR,
-        config.RESULTS_DIR,
-        config.LOGS_DIR,
-        config.MODELS_DIR,
-        config.PLOTS_DIR
-    ]
-    
-    for directory in directories:
-        os.makedirs(directory, exist_ok=True)
-    
-    print("Project directories created successfully!")
-
 def save_json(data: Any, filepath: str, indent: int = 2):
     """Save data to JSON file"""
     with open(filepath, 'w', encoding='utf-8') as f:

@@ -1,0 +1,12 @@
+MLP Training Analysis Report
+========================================
+
+Training completed in 1074 epochs
+Initial loss: 0.278675
+Final loss: 0.010000
+Best loss: 0.010000
+Loss reduction: 96.41%
+
+Detailed logs generated: 24 files
+
+Visualization saved to: /home/tumanggors/komputasional/neural_network/multi_perceptron/data/results/plots/training_analysis.png

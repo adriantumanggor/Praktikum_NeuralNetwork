@@ -4,6 +4,7 @@ Multi-Layer Perceptron implementation
 """
 import random
 import json
+import numpy as np
 from typing import List, Tuple, Dict, Any
 from ..network.activations import sigmoid, sigmoid_derivative
 
@@ -11,8 +12,10 @@ class MLP:
     """Multi-Layer Perceptron implementation from scratch"""
     
     def __init__(self, input_size: int, hidden_size: int, output_size: int, 
-                 learning_rate: float = 0.5, weight_init_range: Tuple[float, float] = (-1.0, 1.0)):
-        """Initialize MLP with random weights and zero biases"""
+                 learning_rate: float = 0.5, 
+                 weight_init_range: Tuple[float, float] = (-1.0, 1.0),
+                 bias_init_value: float = 0.0):
+        """Initialize MLP with random weights and specified biases"""
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.output_size = output_size
@@ -24,10 +27,10 @@ class MLP:
                                    for _ in range(input_size)]
         self.weights_hidden_output = [[random.uniform(min_w, max_w) for _ in range(output_size)] 
                                     for _ in range(hidden_size)]
-        
-        # Initialize biases to zero
-        self.bias_hidden = [0.0] * hidden_size
-        self.bias_output = [0.0] * output_size
+        f
+        # Initialize biases to the specified value
+        self.bias_hidden = [bias_init_value] * hidden_size
+        self.bias_output = [bias_init_value] * output_size
     
     def forward_pass(self, inputs: List[float]) -> Tuple[List[float], List[float], List[float], List[float]]:
         """
@@ -177,9 +180,19 @@ class MLP:
             })
     
     def calculate_loss(self, predictions: List[float], targets: List[float]) -> float:
-        """Calculate Mean Squared Error loss"""
-        loss = sum((predictions[i] - targets[i]) ** 2 for i in range(len(predictions)))
-        return loss / len(predictions)
+        """
+        Calculate Mean Squared Error loss.
+        This version is robust against mixed types (list and numpy array).
+        """
+        # --- FIX: Konversi kedua input ke numpy array agar konsisten ---
+        predictions_arr = np.array(predictions)
+        targets_arr = np.array(targets)
+        
+        # Gunakan operasi numpy untuk menghitung error dan rata-ratanya
+        squared_errors = np.square(predictions_arr - targets_arr.flatten())
+        
+        # np.mean akan menghitung rata-rata dan mengembalikan satu nilai float
+        return np.mean(squared_errors)    
     
     def predict(self, inputs: List[float]) -> List[float]:
         """Make prediction for given inputs"""
@@ -187,18 +200,19 @@ class MLP:
         return outputs
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for saving"""
+        """Convert model to dictionary for saving, ensuring JSON serializability."""
+        # --- FIX: Konversi semua bobot dan bias ke list Python sebelum disimpan ---
         return {
             'input_size': self.input_size,
             'hidden_size': self.hidden_size,
             'output_size': self.output_size,
             'learning_rate': self.learning_rate,
-            'weights_input_hidden': self.weights_input_hidden,
-            'weights_hidden_output': self.weights_hidden_output,
-            'bias_hidden': self.bias_hidden,
-            'bias_output': self.bias_output
+            'weights_input_hidden': np.array(self.weights_input_hidden).tolist(),
+            'weights_hidden_output': np.array(self.weights_hidden_output).tolist(),
+            'bias_hidden': np.array(self.bias_hidden).tolist(),
+            'bias_output': np.array(self.bias_output).tolist()
         }
-    
+        
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'MLP':
         """Create model from dictionary"""
