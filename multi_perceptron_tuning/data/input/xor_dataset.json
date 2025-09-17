@@ -1,0 +1,23 @@
+{
+  "description": "XOR Logic Gate Dataset",
+  "input_size": 2,
+  "output_size": 1,
+  "samples": [
+    {
+      "input": [0.0, 0.0],
+      "target": [0.0]
+    },
+    {
+      "input": [0.0, 1.0],
+      "target": [1.0]
+    },
+    {
+      "input": [1.0, 0.0],
+      "target": [1.0]
+    },
+    {
+      "input": [1.0, 1.0],
+      "target": [0.0]
+    }
+  ]
+}
